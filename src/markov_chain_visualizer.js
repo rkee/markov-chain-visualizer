@@ -54,6 +54,9 @@ function setup() {
   m.addEdge('C', 'C', 0.8);
 
   m.setInitialDistribution([1/3, 1/3, 1/3]);
+
+  let github = createA("https://github.com/rkee/markov-chain-visualizer", "github");
+  github.position(windowWidth -  50, windowHeight - 30);
 }
 
 function draw() {
