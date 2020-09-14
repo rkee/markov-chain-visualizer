@@ -205,9 +205,9 @@ MarkovChain.prototype.period = function() {
 
 // Update value of state oldValue as well as keys of edge objects for all states
 MarkovChain.prototype.updateValue = function(oldValue, newValue) {
-  if (oldValue === newValue) return;
+  if (oldValue == newValue) return;
   if (this.stateSpace.hasOwnProperty(newValue)) {
-    error("State " + displayValue + " already exists");
+    error("State " + newValue + " already exists");
     return;
   }
   this.stateSpace[newValue] = this.stateSpace[oldValue];
