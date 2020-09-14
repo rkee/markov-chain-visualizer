@@ -144,7 +144,7 @@ function editConsole(x, y, w, h, m) {
 var buttonState = "▶";
 // (x, y) is centered in middle of rect
 function simulationConsole(x, y) {
-  if (button(x - 20, 45, 30, 30, buttonState, 15, color(0, 0, 200, 150), color(0, 0, 150, 150), color(255, 255, 255, 150))) {
+  if (button(x - 20, y + 40, 30, 30, buttonState, 15, color(0, 0, 200, 150), color(0, 0, 150, 150), color(255, 255, 255, 150))) {
     if (buttonState === "▶") {
       buttonState = "| |";
       m.runSimulation();
@@ -155,13 +155,14 @@ function simulationConsole(x, y) {
     }
   }
 
-  if (button(x + 20, 45, 30, 30, "■", 25, color(200, 0, 0, 150), color(150, 0, 0, 150), color(255, 255, 255, 150))) {
+  if (button(x + 20, y + 40, 30, 30, "■", 25, color(200, 0, 0, 150), color(150, 0, 0, 150), color(255, 255, 255, 150))) {
     m.stopSimulation();
     if (buttonState === "| |") buttonState = "▶";
   }
 
   textFormat(color(0, 0, 0), 22, CENTER);
   text("π0 = [" + m.p_0Fraction() + "]", x, y - 10);
+  text("n = " + m.n, x, y + 15);
   rectMode(CORNER);
 }
 
