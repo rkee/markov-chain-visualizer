@@ -225,7 +225,6 @@ MarkovChain.prototype.updateValue = function(oldValue, newValue) {
   }
   delete this.stateSpace[oldValue];
   this.update_p_matrix();
-  print(this.stateSpace);
 };
 
 // Set/Update initial distribution
