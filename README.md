@@ -1,15 +1,12 @@
-# Markov Chain Visualizer
+# [Markov Chain Visualizer](https://rkee.github.io/markov-chain-visualizer/)
 
-## About
-Visualize and analyze any finite markov chain with this tool!
+Visualization tool for simulating and analyzing any finite markov chains.
 
-## Supported features:
+## Features:
 * Directed graph editing tools
-* Stochastic matrix visualization
+* Stochastic matrix
 * Reducibility
 * Periodicity
-
-## [Live tool](https://rkee.github.io/markov-chain-visualizer/)
 
 ## Acknowledgements
 * [Algorithms](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.8.4437&rep=rep1&type=pdf)
