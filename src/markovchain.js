@@ -22,10 +22,6 @@ MarkovChain.prototype.addState = function(state, x, y) {
   }
   this.stateSpace[state] = new State(state, x, y);
   this.update_p_matrix();
-  if (this.p_0) {
-    this.p_0.push(1 / this.p_matrix.length);
-    this.p_0.forEach((name, index) => this.p_0[index] = 1 / this.p_matrix.length);
-  }
 };
 
 // Array of strings representing initial distribution where each element is displayed as a fraction
@@ -127,8 +123,8 @@ MarkovChain.prototype.update_p_matrix = function() {
   }
   var stateIndex = 0;
   for (let state in this.stateSpace) {
-    for (var pIndex = 0; pIndex < n; pIndex++) {
-      for (var i in this.stateSpace[state].edges) {
+    for (let pIndex = 0; pIndex < n; pIndex++) {
+      for (let i in this.stateSpace[state].edges) {
         if (pIndex === stateIndexMap[i]) {
           this.p_matrix[stateIndex][pIndex] = this.stateSpace[state].edges[i];
         }
@@ -136,6 +132,10 @@ MarkovChain.prototype.update_p_matrix = function() {
     }
     stateIndex += 1;
   }
+
+  let buffer = [];
+  for (let i = 0; i < this.p_matrix.length; i++) buffer.push(1 / this.p_matrix.length)
+  this.setInitialDistribution(buffer);
 };
 
 // Return True iff from any given state, all other states are reachable
@@ -246,9 +246,8 @@ MarkovChain.prototype.runSimulation = function() {
     return;
   }
   let sum = 0;
-  for (let i = 0; i < this.p_0.length; i++) {
-    sum += this.p_0[i];
-  }
+  for (let i = 0; i < this.p_0.length; i++) sum += this.p_0[i];
+
   if (sum !== 1) {
     error("Initial distribution is invalid\nElements must sum to 1");
     return;
@@ -257,25 +256,20 @@ MarkovChain.prototype.runSimulation = function() {
     error("Markov Chain must be complete\nSum of all outward edge weights for each state must sum to 1");
     return;
   }
-  if (!this.running) {
-    this.running = true;
-  }
+  if (!this.running) this.running = true;
 };
 
 // Pause simulation
 MarkovChain.prototype.pauseSimulation = function() {
-  if (this.running) {
-    this.running = false;  
-  }
+  this.running = false;  
 }
 
 // Stop simulation
 MarkovChain.prototype.stopSimulation = function() {
-  if (this.running) {
-    this.running = false;  
-    this.n = 0;
-    this.t = 0;
-  }
+  this.running = false;  
+  this.n = 0;
+  this.t = 0;
+  this.current = null;
 };
 
 // Display transition matrix
@@ -316,23 +310,20 @@ MarkovChain.prototype.draw = function() {
       if (from.value === to.value) {
         drawSelfLoop(from.x, from.y, this.centerOfMass(), from.edges[edge]);    
       }
-      else if (from.edges.hasOwnProperty(to.value) &&
-               to.edges.hasOwnProperty(from.value)) {
-                 drawCurvedArrow(from.x, from.y, to.x, to.y, this.centerOfMass(),from.edges[edge]);
+      else if (from.edges.hasOwnProperty(to.value) && to.edges.hasOwnProperty(from.value)) {
+        drawCurvedArrow(from.x, from.y, to.x, to.y, this.centerOfMass(),from.edges[edge]);
       }
       else {
         drawArrow(from.x, from.y, to.x, to.y, this.centerOfMass(), from.edges[edge]); 
       }
     }
   }
-  for (let state in this.stateSpace) {
-    this.stateSpace[state].draw();  
-  }
+  for (let state in this.stateSpace) this.stateSpace[state].draw();  
   
   if (!this.isComplete()) { this.stopSimulation(); }
 
   if (this.running && Object.keys(this.stateSpace).length > 0) {
-    if (this.t === 0 && this.n === 0) {
+    if (!this.current) {
       this.current = this.indexStateMap()[sample(this.p_0)];
     }
     this.t++;

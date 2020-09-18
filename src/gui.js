@@ -123,13 +123,13 @@ function editConsole(x, y, w, h, m) {
       edgeValueInput[i].position(x + w/6, y + 225 + i*30);
       edgeValueInput[i].width(50);
       edgeValueInput[i].changed(function() { 
-        m.stateSpace[m.selected].edges[edge] = edgeValueInput[i].text; 
+        m.stateSpace[m.selected].edges[edge] = parseFloat(edgeValueInput[i].text); 
         m.update_p_matrix();
       });
       edgeValueInput[i].render();
 
       if (button(x + w/2.1, y + 235 + i*30, 30, 20, "update", 9, color(100), color(50), color(255)) && edgeValueInput[i].text.length > 0) {
-        m.stateSpace[m.selected].edges[edge] = edgeValueInput[i].text; 
+        m.stateSpace[m.selected].edges[edge] = parseFloat(edgeValueInput[i].text); 
         m.update_p_matrix();
       }
 
@@ -144,15 +144,11 @@ function editConsole(x, y, w, h, m) {
 var buttonState = "▶";
 // (x, y) is centered in middle of rect
 function simulationConsole(x, y) {
+  if (!m.running) buttonState = "▶";
+  else buttonState = "| |";
   if (button(x - 20, y + 40, 30, 30, buttonState, 15, color(0, 0, 200, 150), color(0, 0, 150, 150), color(255, 255, 255, 150))) {
-    if (buttonState === "▶") {
-      buttonState = "| |";
-      m.runSimulation();
-    }
-    else {
-      buttonState = "▶";
-      m.pauseSimulation();
-    }
+    if (buttonState === "▶") m.runSimulation();
+    else m.pauseSimulation();
   }
 
   if (button(x + 20, y + 40, 30, 30, "■", 25, color(200, 0, 0, 150), color(150, 0, 0, 150), color(255, 255, 255, 150))) {
@@ -190,5 +186,4 @@ function statsConsole(x, y, w, h) {
   textAlign(LEFT, LEFT);
   text("P = ", x + w/12, y + 115 + 115);
   m.printP(x + w/4, y + 80 + 115);
-
 }
