@@ -217,8 +217,7 @@ textInput.prototype.handleSpecial = function() {
   this.key = key;
 };
 
-// Credit
-// https://github.com/peterolson/BigRational.js
+// Credit https://github.com/peterolson/BigRational.js
 function rationalize(rational, epsilon) {
   var denominator = 0;
   var numerator;
