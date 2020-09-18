@@ -12,6 +12,7 @@ Visualization tool for simulating and analyzing any finite markov chains.
 * Custom initial distribution editing
 * Long-term frequency histogram visualizer
 * Stationary distribution
+* Ability to add edges with fractional weight values
 
 ## Acknowledgements
 * [Algorithms](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.8.4437&rep=rep1&type=pdf)
