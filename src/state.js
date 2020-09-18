@@ -30,7 +30,7 @@ State.prototype.isComplete = function() {
     for (var i in this.edges) {
         sum += eval(this.edges[i]);
     }
-    return 1 - sum < 0.001;
+    return Math.abs(1 - sum) < 0.001;
 };
 
 // Draw the state

@@ -179,8 +179,9 @@ function statsConsole(x, y, w, h) {
   rect(x + w/24, y + 40, w - w/12, 100);
   textFormat(color(0, 0, 0), tSize, LEFT); 
   text("X = {" + Object.keys(m.stateSpace) + "}", x + w/14, y + 55);
-  text("Irreducible: " + m.irreducible(), x + w/14, y + 80);
-  text("Period = " + m.period(), x + w/14, y + 105);
+  text("Complete: " + m.isComplete(), x + w/14, y + 80);
+  text("Irreducible: " + m.irreducible(), x + w/14, y + 105);
+  text("Period = " + m.period(), x + w/14, y + 130);
 
   fill(230);
   rect(x + w/24, y + 40 + 115, w - w/12, 30 + m.p_matrix.length * 35);

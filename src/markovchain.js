@@ -142,6 +142,8 @@ MarkovChain.prototype.update_p_matrix = function() {
 // equivalently: irreducible iff every state has at least one inward edge (non-self loop) and outward edge to some other state
 // => can analyze stochastic matrix instead of performing a BFS
 MarkovChain.prototype.irreducible = function() {
+  if (!this.isComplete()) return "incomplete";
+
   let hasInward = Array(Object.keys(this.stateSpace).length).fill(0); // bit array tracking existence of inward edge for each state
   let hasOutward = Array(Object.keys(this.stateSpace).length).fill(0);  // bit array tracking existence of outward edge for each state
 
@@ -157,7 +159,8 @@ MarkovChain.prototype.irreducible = function() {
 
 // Return the period of the Markov chain or NULL if period is undefined (i.e. Markov chain is reducible)
 MarkovChain.prototype.period = function() {
-  if (!this.irreducible()) return "UNDEFINED";
+  if (!this.isComplete()) return "incomplete";
+  if (!this.irreducible()) return "undefined (reducible)";
   
   let queue = [];
   let visited = {};
